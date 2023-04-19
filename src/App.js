@@ -1,25 +1,50 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const url = 'https://jsonplaceholder.typicode.com/comments';
+	const [data, setData] = useState([]);
+
+	// By Fetching Method
+	//  useEffect(() => {
+	//   const url = "https://jsonplaceholder.typicode.com/comments"
+	//   fetch(url)
+	//   .then(response => response.json())
+	//   .then(json => {
+	//    console.log("jsonnn", json)
+	//    setData(json)
+	//   }).catch (e => {
+	//       console.log("e", e)
+	//   })
+	// }, [])
+
+	useEffect(() => {
+		axios.get(url).then((response) => {
+			setData(response.data);
+		});
+	}, []);
+	return (
+		<>
+			{/* By Fetching Method  */}
+			{/* <div className='App'>
+        <h2>Welcome</h2>
+        {
+           data.map(itme => {
+            return(
+              <div>
+                {itme.email}
+                </div>
+            )
+           }) 
+        }
+       </div> */}
+			<h2>Welcome</h2>
+			{data.map((item) => {
+				return <div>{item.email}</div>;
+			})}
+		</>
+	);
+};
 
 export default App;
